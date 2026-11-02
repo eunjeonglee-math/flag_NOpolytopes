@@ -1,0 +1,227 @@
+{
+  "status": "passed",
+  "rootConvention": "1 long, 2 short; browser B2 numbering",
+  "factorization": "y1(a)y2(b)y1(c)y2(d)",
+  "initialChamberMinors": [
+    "a + c",
+    "a*b + a*d + c*d",
+    "a*b^2*c",
+    "b*c*d"
+  ],
+  "algebraicIndependenceVerified": true,
+  "matches": [
+    {
+      "word": [
+        1,
+        2,
+        1,
+        2
+      ],
+      "seed": 0,
+      "sequence": [],
+      "wordPositionToVertex": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "chamberMinors": [
+        "a + c",
+        "a*b + a*d + c*d",
+        "a*b^2*c",
+        "b*c*d"
+      ],
+      "B": [
+        [
+          0,
+          -1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          -1,
+          1
+        ],
+        [
+          0,
+          -1
+        ]
+      ],
+      "H": [
+        [
+          1,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          -1,
+          0,
+          -1
+        ],
+        [
+          1,
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          -1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          0
+        ]
+      ],
+      "clusterFunctionsVerified": true,
+      "matrixVerified": true,
+      "facetsVerified": true
+    },
+    {
+      "word": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "seed": 3,
+      "sequence": [
+        1,
+        2,
+        1
+      ],
+      "wordPositionToVertex": [
+        2,
+        1,
+        4,
+        3
+      ],
+      "chamberMinors": [
+        "b + d",
+        "b^2*c",
+        "b*c*d",
+        "a*b^2*c"
+      ],
+      "B": [
+        [
+          0,
+          -2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          -1,
+          2
+        ],
+        [
+          0,
+          -1
+        ]
+      ],
+      "H": [
+        [
+          1,
+          -1,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          -1,
+          0,
+          -1
+        ],
+        [
+          1,
+          0,
+          0,
+          -1,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          -1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          2,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          2,
+          1,
+          0
+        ]
+      ],
+      "clusterFunctionsVerified": true,
+      "matrixVerified": true,
+      "facetsVerified": true
+    }
+  ],
+  "reducedWordsExhaustive": "Rank two with braid length four: the two longest reduced words are 1212 and 2121.",
+  "nonReducedWordSeeds": [
+    1,
+    2,
+    4,
+    5
+  ]
+}

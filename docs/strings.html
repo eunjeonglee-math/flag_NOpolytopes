@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOBY · String polytopes</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="strings.css">
+<script defer src="data/string-words.js"></script><script defer src="engine.js"></script><script defer src="string-engine.js"></script><script defer src="string-plot.js"></script><script defer src="strings.js"></script></head>
+<body><header id="strings-top" class="masthead site-masthead" tabindex="-1"><div class="site-topbar"><a class="brand" href="index.html">NOBY<span class="brand-expansion">(Newton–Okounkov Bodies)</span></a></div><nav class="site-tabs" aria-label="Main navigation"><a href="index.html">Classes</a><a href="strings.html" aria-current="page">String polytopes</a><a href="blmm.html">BLMM</a></nav></header>
+<main class="string-page">
+  <div class="string-intro"><span class="eyebrow">TYPE A · FLAG AND SCHUBERT VARIETIES</span><h1>From a word and λ to a polytope</h1><p>Enter a reduced word for any w ∈ Sₙ and a dominant integral weight.</p></div>
+  <div class="string-workspace">
+    <aside class="panel string-input-panel"><div class="panel-heading"><div><span class="eyebrow">1 · CHOOSE THE INPUT</span><h2>Word &amp; weight</h2></div></div>
+      <form id="string-form" class="string-form">
+        <label for="string-n">Group SL(n) · type Aₙ₋₁</label><select id="string-n"><option value="2">SL(2) · A₁</option><option value="3">SL(3) · A₂</option><option value="4">SL(4) · A₃</option><option value="5" selected>SL(5) · A₄</option><option value="6">SL(6) · A₅</option><option value="7">SL(7) · A₆</option><option value="8">SL(8) · A₇</option></select>
+        <label for="string-word">Reduced word</label><input id="string-word" value="[1,2,1,3,2,1,4,3,2,1]" autocomplete="off" spellcheck="false" aria-describedby="string-word-help"><p id="string-word-help" class="small-note">Any reduced word is allowed; [] represents the identity.</p>
+        <label for="string-weight">λ = λ₁ω₁ + ⋯ + λₙ₋₁ωₙ₋₁</label><input id="string-weight" value="[1,1,1,1]" autocomplete="off" spellcheck="false" aria-describedby="string-weight-help"><p id="string-weight-help" class="small-note">Enter four nonnegative integer coefficients.</p>
+        <div class="string-weight-buttons"><button type="button" class="secondary" id="weight-rho">ρ</button><button type="button" class="secondary" id="weight-2rho">2ρ</button><button type="button" class="secondary" id="weight-zero">0</button></div>
+        <button id="string-compute" type="submit">Compute polytope</button>
+        <div id="string-status" class="status" role="status" aria-live="polite"></div>
+      </form>
+      <div class="string-examples"><span class="eyebrow">EXAMPLES</span><button type="button" class="seed-chip" id="example-schubert">SL(3) · Schubert surface</button><button type="button" class="seed-chip" id="example-flag">SL(3) · full flag</button><button type="button" class="seed-chip" id="example-sl5">SL(5) · full flag</button></div>
+      <details id="original-word-options" class="string-originals" open><summary>Original SL5 representatives</summary><label for="original-word" class="visually-hidden">Original representative</label><select id="original-word"></select></details>
+    </aside>
+    <section id="string-result" class="string-output" hidden aria-label="Computed string polytope">
+      <section class="panel"><div class="panel-heading"><div><span class="eyebrow">2 · THE POLYTOPE</span><h2 id="string-result-title"></h2></div><span id="string-dimension" class="count"></span></div>
+        <div class="string-result-body"><p id="string-input-summary" class="mono"></p><p id="string-permutation" class="mono"></p><p id="string-reference" class="small-note"></p><p id="string-geometry-summary"></p><p id="string-geometry-note" class="small-note"></p>
+          <div id="string-plot-wrap" hidden>
+            <svg id="string-plot" viewBox="0 0 540 330" role="img" aria-label="Polytope and all lattice points. Drag or use arrow keys to rotate a three-dimensional view." aria-describedby="string-plot-note"></svg>
+            <div id="string-rotation-label" class="string-view-controls" hidden><label for="string-rotation">Rotation <input id="string-rotation" type="range" min="0" max="360" value="35"></label><button type="button" id="string-view-reset" class="secondary">Reset view</button></div>
+            <p id="string-lattice-summary" role="status"></p>
+            <div id="string-lattice-legend" class="string-lattice-legend"><span><i class="lattice-interior"></i>Interior</span><span><i class="lattice-boundary"></i>Boundary</span><span><i class="lattice-vertex"></i>Vertex</span></div>
+            <p id="string-plot-note" class="small-note"></p><p id="string-point-info" class="small-note mono" aria-live="polite"></p>
+            <details id="string-lattice-details"><summary>All lattice-point coordinates</summary><pre id="string-lattice-points"></pre></details>
+          </div>
+          <details id="string-vertices-details" hidden><summary>Exact vertices</summary><pre id="string-vertices"></pre></details>
+        </div>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><span class="eyebrow">3 · DEFINING INEQUALITIES</span><h2>String cone &amp; λ bounds</h2></div><span id="string-row-count" class="count"></span></div>
+        <div class="string-result-body"><p class="small-note">Rows mean c + a · x ≥ 0.</p><h3>String-cone inequalities</h3><div id="string-cone-rows" class="string-rows"></div><h3>Weight inequalities</h3><div id="string-weight-rows" class="string-rows"></div>
+          <details><summary>Construction for this word</summary><p id="string-completion" class="mono"></p><p id="string-face-note" class="small-note"></p><details><summary>GP path witnesses</summary><pre id="string-path-witnesses"></pre></details></details>
+          <details><summary>H-representation as coefficient rows</summary><pre id="string-H"></pre></details>
+        </div>
+      </section>
+      <section class="panel reproduction-panel"><h2>SageMath &amp; data</h2><div class="notes-content">
+        <h3>Notebook</h3>
+        <pre>notebooks/String_polytope_inequalities.ipynb</pre>
+        <p>Use a SageMath kernel and run the function definitions first. Set the word and weight below to obtain the polytope, vertices and f-vector:</p>
+        <pre id="string-sage-input"></pre>
+        <h3>Precomputed data</h3>
+        <pre>docs/data/string-gp-generated.json</pre>
+        <p>Saved GP inequalities for the original SL(5) representatives and BLMM reference representatives. Each record includes its word and weight; other inputs can be computed in the notebook.</p>
+      </div></section>
+    </section>
+  </div>
+  <section id="string-references" class="panel references-panel"><h2>References</h2><div class="notes-content">
+    <ul class="reference-list" role="list"><li><strong class="reference-label">[GP]</strong><span>Oleg Gleizer and Alexander Postnikov, <a href="https://doi.org/10.1155/S1073792800000416" target="_blank" rel="noopener"><em>Littlewood–Richardson coefficients via Yang–Baxter equation</em></a>, International Mathematics Research Notices, Volume 2000, Issue 14 (2000), 741–774.</span></li></ul>
+  </div></section>
+  <a class="blmm-top-button" href="#strings-top" aria-label="Back to top">↑ Top</a>
+</main><footer><span class="footer-credit">Created with assistance from ChatGPT. · © Shin Hong, Jeongsoo Kim, Eunjeong Lee.</span></footer>
+</body></html>

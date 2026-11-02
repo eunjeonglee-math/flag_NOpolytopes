@@ -1,0 +1,45 @@
+/* Diagrams use natural pixel sizes; text is never enlarged to fill the panel. */
+.top-grid{align-items:start}
+.quiver-scroll{height:auto;max-height:360px;overflow:auto;padding:12px}
+.quiver-scroll svg{min-height:0;max-width:none;display:block;margin:auto}
+.quiver-scroll[hidden],#wiring-panel[hidden]{display:none}
+.matrix-scroll{max-height:360px;min-height:0}
+.wiring-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:0 22px}
+.wiring-toolbar .count{white-space:normal;overflow-wrap:anywhere}
+.wiring-toolbar label{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--muted)}
+.wiring-toolbar input{width:auto}
+.wiring-toolbar [hidden]{display:none}
+.wiring-scroll{overflow:auto;max-height:430px;padding:0 12px 10px}
+.wiring-scroll svg{display:block;max-width:none;margin:auto}
+.wiring-strand{fill:none;stroke:#a8b9c6;stroke-width:1.5;stroke-linejoin:round}
+.wiring-label{font:11px var(--mono);fill:#607388}
+.wiring-edge{fill:none;stroke:#506b83;stroke-width:1.5}
+.hide-arrows .wiring-arrows{display:none}
+.wiring-node circle{fill:var(--blue);stroke:white;stroke-width:2}
+.wiring-node rect{fill:#e8eff5;stroke:#a9bbca;stroke-width:1.5}
+.wiring-node text{font:12px var(--mono);fill:white;pointer-events:none}
+.wiring-node[role=button]{cursor:pointer}
+.wiring-node.frozen text{fill:#526d84}
+.wiring-node:hover circle,.wiring-node:focus circle,.wiring-node:hover rect,.wiring-node:focus rect{stroke:#ef9f3c;stroke-width:3}
+.wiring-linked circle,.wiring-linked rect{stroke:#ef9f3c!important;stroke-width:3!important}
+.matrix-scroll tr.wiring-linked{background:#fff0d7!important}
+#wiring-panel .notes-content{font-size:.8rem}
+@media(max-width:780px){.wiring-toolbar{padding:0 18px}.quiver-scroll{max-height:310px}}
+
+/* Resizing a panel expands its viewport; adjacent panels reflow instead of overlapping. */
+.graph-panel{resize:both;height:760px;min-height:360px;max-width:calc(100% - 300px);display:flex;flex-direction:column;overflow:auto;position:static}
+.graph-panel> :not(.graph-viewport){flex-shrink:0}
+.graph-viewport{position:relative;flex:1 0 180px;min-height:180px;overflow:hidden}
+.graph-panel .graph-viewport #graph{position:absolute;inset:0;display:block;width:100%;height:100%;max-height:none;min-height:0;overflow:hidden}
+.top-grid{display:flex;flex-wrap:wrap;align-items:flex-start}
+.top-grid>.matrix-panel{flex:1 1 260px;min-width:min(260px,100%)}
+.quiver-panel{display:flex;flex-direction:column;flex:0 0 auto;width:calc((100% - 18px)*.512);max-width:100%;min-width:min(280px,100%);height:480px;min-height:260px;resize:both;overflow:auto}
+.quiver-panel>.panel-heading{flex-wrap:wrap;flex-shrink:0}
+.quiver-panel>.quiver-scroll{flex:1 1 auto;min-height:80px;height:auto;max-height:none}
+.quiver-panel>#wiring-panel{display:flex;flex-direction:column;flex:1 1 auto;min-height:100px}
+.quiver-panel>#wiring-panel[hidden]{display:none}
+.quiver-panel .wiring-toolbar,.quiver-panel .conventions,.quiver-panel .quiver-legend{flex-shrink:0}
+.quiver-panel .wiring-scroll{flex:1 1 auto;min-height:60px;max-height:none}
+.panel-resize-hint{flex-shrink:0;margin:4px 22px 12px;font-size:.7rem;color:var(--muted);text-align:right;padding-right:8px}
+@media(max-width:1150px){.quiver-panel{width:100%}}
+@media(max-width:780px){.graph-panel{width:100%;max-width:100%;min-width:min(245px,100%);resize:both;position:static}.quiver-panel{width:100%}}

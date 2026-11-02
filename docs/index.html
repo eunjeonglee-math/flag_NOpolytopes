@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Newton–Okounkov polytopes of full flag varieties through cluster mutations.">
+  <title>NOBY · Polytope classes</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%231a3652'/%3E%3Cpath d='M20 8L8 30h24Z' fill='none' stroke='%2372d8cf' stroke-width='2'/%3E%3Ccircle cx='20' cy='8' r='4' fill='%23ffffff'/%3E%3Ccircle cx='8' cy='30' r='4' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='30' r='4' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="wiring.css">
+  <script defer src="engine.js"></script>
+  <script defer src="data/type-b-initial.js"></script>
+  <script defer src="data/b2-catalogue.js"></script>
+  <script defer src="type-b.js"></script>
+  <script defer src="words.js"></script>
+  <script defer src="wiring.js"></script>
+  <script defer src="identity.js"></script>
+  <script defer src="affine.js"></script>
+  <script defer src="data/minor-g.js"></script>
+  <script defer src="catalogue.js"></script>
+  <script defer src="data/blmm-labels.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header id="classes-top" class="masthead site-masthead" tabindex="-1">
+    <div class="site-topbar"><a class="brand" href="index.html">NOBY<span class="brand-expansion">(Newton–Okounkov Bodies)</span></a></div>
+    <nav class="site-tabs" aria-label="Main navigation"><a href="index.html" aria-current="page">Classes</a><a href="strings.html">String polytopes</a><a href="blmm.html">BLMM</a></nav>
+  </header>
+  <main>
+    <div class="class-page-heading"><div><h1>Polytope classes</h1><p class="small-note">Unimodular and combinatorial equivalence classes</p></div><div class="dimension-control"><label for="family">Type</label><select id="family" aria-label="Lie type"><option value="A">A · SL(n)</option><option value="B">B · SO(2n+1)</option></select><label id="dimension-label" for="dimension">Flag(ℂ<sup>n</sup>)</label><select id="dimension" aria-label="Choose n"></select><span class="finite-label">Is finite type? <strong id="finite">Yes</strong></span></div></div>
+    <div class="context-line"><span id="context">Type A₃ · dimension 6</span><span>Anticanonical polarization · λ = 2ρ · centered at the interior lattice point</span></div>
+    <section class="panel class-catalogue" aria-label="Equivalence class catalogue"><div class="class-controls"><label for="class-relation">Equivalence</label><select id="class-relation"><option value="unimodular">Unimodular</option><option value="combinatorial">Combinatorial</option></select><span id="class-count" class="count"></span></div><p id="class-list-note" class="small-note">Each row lists one class. Select a seed to inspect its polytope below.</p><div id="class-list" class="class-list"></div></section>
+    <div class="toolbar">
+      <div class="seed-heading"><span class="eyebrow">CURRENT SEED</span><h2 id="seed-title">Seed 0</h2></div>
+      <form id="sequence-form"><label for="input-mode" class="visually-hidden">Input type</label><select id="input-mode" aria-label="Input type"><option value="mutation">Mutation sequence</option><option value="word">Reduced word</option></select><div class="sequence-input"><input id="sequence" aria-label="Mutation sequence" aria-describedby="input-help" placeholder="[1, 2, 3]" value="[]" autocomplete="off" spellcheck="false"><button type="submit" id="apply">Apply</button></div></form>
+      <div class="history-buttons"><button id="undo" class="secondary" disabled>↶ Undo</button><button id="reset" class="secondary">Reset to seed 0</button><button id="export" class="secondary" title="Download the current seed as JSON">Export ↓</button></div>
+    </div>
+    <section class="path-explanation" aria-label="Input convention"><p id="input-help"></p><p id="path-formula" class="path-formula"></p><p id="b-input-note" hidden>Type B: n is the Lie rank, and node n is the short root. Quiver labels are cluster-coordinate labels, not simple-root indices. Use a mutation sequence here; arbitrary reduced words are supported in the SageMath notebook.</p><div id="word-route" hidden></div></section>
+    <div id="status" class="status" role="status" aria-live="polite">Preparing the initial seed…</div>
+    <div class="workspace">
+      <aside id="graph-panel" class="panel graph-panel">
+        <div class="panel-heading"><div><span class="eyebrow">FINITE CLUSTER PATTERN</span><h2>Exchange graph</h2></div><span id="graph-count" class="count"></span></div>
+        <div class="graph-viewport"><svg id="graph" viewBox="0 0 360 420" role="group" aria-label="Exchange graph. Select a seed."></svg></div>
+        <p class="small-note graph-word-legend"><span class="word-seed-key">RW</span> Seed from a reduced word</p>
+        <div id="graph-default-legend" class="graph-footer"><span class="legend-dot selected"></span>Current seed <span class="legend-dot equivalent"></span>Same unimodular type</div>
+        <div id="graph-symmetry-note" hidden>
+          <div class="graph-footer"><span class="legend-dot current-ring"></span>Current seed <span id="graph-class-swatches" class="class-swatches" aria-hidden="true"></span>Same color = same type</div>
+          <p id="graph-symmetry-caption" class="symmetry-caption"></p>
+        </div>
+        <div id="b2-graph-note" hidden>
+          <div id="b2-word-seeds" class="b2-word-links"></div>
+          <label class="graph-color-control" for="b2-graph-color">Color by <select id="b2-graph-color"><option value="unimodular">Unimodular equivalence</option><option value="combinatorial">Combinatorial equivalence</option></select></label>
+          <div class="graph-footer"><span class="legend-dot current-ring"></span>Current seed · same color = same class</div>
+          <p id="b2-symmetry-caption" class="symmetry-caption"></p>
+          <p id="b2-symmetry-pairs" class="small-note"></p>
+          <details class="b2-symmetry-details"><summary>Which symmetry?</summary><p>The uncolored hexagon has a dihedral symmetry group of order 12. Dashed axes show reflections preserving each selected polytope class. Mutation-direction labels and RW badges are ignored in this symmetry statement; these graph symmetries are not being identified with automorphisms of the cluster algebra with frozen variables.</p></details>
+        </div>
+        <p class="small-note">Select a vertex to open its stored representative. Mutation sequences retain their own coordinate labels.</p>
+        <p id="graph-citation" class="small-note graph-citation" hidden>[CFHL] Y. Cho, N. Fujita, A. Higashitani and E. Lee, <a href="https://link.springer.com/article/10.1134/S0081543824040175" target="_blank" rel="noopener"><em>Newton–Okounkov Polytopes of Type A Flag Varieties of Small Ranks Arising from Cluster Structures</em></a>, Proceedings of the Steklov Institute of Mathematics 326 (2024), 352–366.</p>
+        <p class="panel-resize-hint">Drag the bottom-right corner to resize.</p>
+      </aside>
+      <section class="detail-column" aria-label="Seed information">
+        <div class="top-grid">
+          <section class="panel quiver-panel">
+            <div class="panel-heading"><div><span class="eyebrow">MUTATE A VERTEX</span><h2>Seed quiver</h2></div><div class="zoom-buttons"><button id="quiver-minus" class="icon-button" aria-label="Zoom out quiver">−</button><button id="quiver-fit" class="icon-button" aria-label="Fit quiver">Fit</button><button id="quiver-plus" class="icon-button" aria-label="Zoom in quiver">+</button></div></div>
+            <div id="quiver-scroll" class="quiver-scroll"><svg id="quiver" role="group" aria-label="Seed quiver. Click a mutable vertex to mutate."></svg></div>
+            <div id="wiring-panel" hidden>
+              <div class="wiring-toolbar"><span id="wiring-source" class="count"></span><label><input id="wiring-arrows" type="checkbox" checked> Show quiver arrows</label></div>
+              <div id="wiring-scroll" class="wiring-scroll" tabindex="0" aria-label="Wiring diagram, scroll horizontally"><svg id="wiring-diagram" role="group" aria-label="Seed quiver on its reduced-word wiring diagram. Click a mutable chamber to mutate."></svg></div>
+              <details class="conventions"><summary>How to read this wiring</summary><div class="notes-content"><p id="wiring-context"></p><p>Read the crossings from left to right: sᵢ exchanges levels i and i + 1, counted from the bottom. Each numbered chamber gives a flag minor Δ<sub>I</sub>. Hover or focus to see I and highlight the corresponding row of B.</p><p>Bounded chambers are mutable circles; chambers open on the right are frozen squares. Unnumbered left boundary minors specialize to 1. Arrows follow consecutive and interlacing chamber endpoints, with i → j meaning bᵢⱼ &lt; 0.</p></div></details>
+            </div>
+            <div class="quiver-legend"><span><i class="mutable-symbol"></i>Mutable · click to mutate</span><span><i class="frozen-symbol"></i>Frozen</span></div>
+            <p class="panel-resize-hint">Drag the bottom-right corner to resize.</p>
+          </section>
+          <section class="panel matrix-panel">
+            <div class="panel-heading"><div><span class="eyebrow">EXTENDED EXCHANGE MATRIX</span><h2>B-matrix</h2></div><span id="matrix-shape" class="count"></span></div>
+            <div id="matrix" class="matrix-scroll" tabindex="0" aria-label="Exchange matrix, scroll to view all entries"></div>
+            <p class="small-note">Rows: all variables. Columns: mutable variables.</p>
+          </section>
+        </div>
+        <section class="panel invariants-panel">
+          <div class="invariant"><span class="eyebrow">F-VECTOR</span><div id="f-vector" class="mono"></div></div>
+          <div class="invariant"><span class="eyebrow">UNIMODULARLY EQUIVALENT SEEDS</span><p id="equivalent-note" class="small-note" hidden></p><div id="equivalent"></div><button id="affine-toggle" class="secondary" type="button" aria-expanded="false">Select two &amp; view affine map</button></div>
+          <section id="affine-panel" class="invariant" aria-label="Affine map between equivalent polytopes" hidden>
+            <h2>Affine unimodular map</h2><p class="small-note">Select source and target below, or click two seeds in the list above. This map relates their polytopes; it is not a mutation of seeds.</p>
+            <div class="affine-selectors"><label>Source (x)<select id="affine-source" aria-label="Affine map source"></select></label><button id="affine-swap" type="button" class="secondary" aria-label="Reverse affine map">⇄</button><label>Target (y)<select id="affine-target" aria-label="Affine map target"></select></label></div>
+            <p id="affine-pick-note" class="small-note"></p><p id="affine-status" role="status"></p>
+            <div id="affine-result" hidden><p class="affine-equation">y = Ax + b</p><p id="affine-convention" class="small-note"></p><div id="affine-formulas" class="blmm-formulas"></div><p id="affine-b" class="mono blmm-vector"></p><details><summary>Full matrix A</summary><pre id="affine-matrix" class="affine-matrix" tabindex="0"></pre></details><button id="affine-export" type="button" class="secondary">View / download map JSON</button></div>
+          </section>
+          <div id="identical-section" class="invariant"><span class="eyebrow">SAME SEED</span><p class="small-note">Same cluster variables and B-matrix, allowing mutable-vertex relabeling; frozen variables stay fixed.</p><p id="identical-note" class="small-note"></p><div id="identical-paths" class="sequence-list"></div><details id="identical-words-details"><summary id="identical-words-summary">Reduced words in this commutation class</summary><p class="small-note">These reduced words differ only by commuting adjacent letters <i>i</i> and <i>j</i> with |<i>i</i> − <i>j</i>| &gt; 1. They determine the same seed up to mutable-variable relabeling.</p><p class="small-note">Simple-reflection indices, not mutation directions. Select a word to open its chamber seed.</p><div id="identical-words" class="sequence-list"></div><button id="identical-more" type="button" class="secondary" hidden>Show more words</button></details></div>
+          <div id="b2-reduced-section" class="invariant" hidden>
+            <span class="eyebrow">REDUCED-WORD SEED</span><p id="b2-reduced-note" class="small-note"></p><div id="b2-reduced-words" class="sequence-list"></div><p id="b2-word-coordinate-note" class="small-note"></p>
+            <p class="small-note">Browser convention: root 1 is long and root 2 is short. This marker identifies the chamber seed itself, not just its polytope type.</p>
+            <p id="b2-c2-convention" class="small-note"><strong>B₂ ↔ C₂ numbering.</strong> Cho–Fujita–Lee use C₂ root 1 short and root 2 long. Exchange the simple-root labels 1 ↔ 2: browser [1,2,1,2] ↔ C₂ [2,1,2,1] (Seed 0), and browser [2,1,2,1] ↔ C₂ [1,2,1,2] (Seed 3). The order of positions is unchanged; mutation directions are quiver labels and are not swapped by this convention. Weight coefficients (a,b) become (b,a); the browser weight 2ρ is unchanged. The string inequalities agree exactly after the coordinate change. See <a href="https://arxiv.org/html/2306.11242v2" target="_blank" rel="noopener">Cho–Fujita–Lee, Theorem 3.5 and Lemma 5.17</a>.</p>
+          </div>
+          <div id="reduced-section" class="invariant"><span class="eyebrow">REDUCED WORDS · RECORDED POLYTOPE MATCHES</span><p class="small-note">Original catalogue matches; these words may define a different seed.</p><div id="reduced-words" class="mono"></div></div>
+          <div id="blmm-section" class="invariant" hidden><span class="eyebrow">BLMM TABLE 6 · EQUIVALENT STRING POLYTOPES</span><div id="blmm-labels" class="blmm-pair-nav"></div></div>
+        </section>
+        <section class="panel h-panel">
+          <div class="panel-heading"><div><span class="eyebrow">NEWTON–OKOUNKOV POLYTOPE</span><h2>H-representation</h2></div><span id="h-count" class="count"></span></div>
+          <div class="h-toolbar"><div class="segmented" aria-label="Inequality display"><button id="h-formula" class="active" aria-pressed="true">Inequalities</button><button id="h-coefficients" aria-pressed="false">Coefficient rows</button></div><span class="small-note">a · y + c ≥ 0</span></div>
+          <p id="h-note" class="small-note h-note"></p>
+          <div id="inequalities" class="inequalities" tabindex="0" aria-label="Polytope inequalities"></div>
+        </section>
+        <details class="panel variables-panel" open><summary>Cluster variables</summary><div id="variables" class="variables"></div><p id="variable-note" class="small-note"></p></details>
+        <section id="verification-source" class="panel reproduction-panel"><h2>SageMath &amp; data</h2><div class="notes-content">
+          <h3>Notebooks</h3>
+          <pre>notebooks/A4_cluster_polytopes.ipynb
+notebooks/B2_cluster_polytopes.ipynb
+notebooks/finite_type_verification.py</pre>
+          <p>Keep the helper beside the notebooks and use a SageMath kernel. After generating the catalogue, choose <code>seed_id</code> to inspect <code>catalogue["seeds"][seed_id]</code> and <code>polytopes[seed_id]</code>.</p>
+          <h3>Precomputed data</h3>
+          <pre>docs/data/verification/A3_verification.json
+docs/data/verification/A4_verification.json
+docs/data/verification/B2_verification.json</pre>
+          <p>Read the saved results without rerunning the computation. From the repository root, use Python or SageMath:</p>
+          <pre>import json
+from pathlib import Path
+
+kind = "A4"  # A3, A4 or B2
+data = json.loads(Path(f"docs/data/verification/{kind}_verification.json").read_text())
+seed_id = 0
+seed = data["seeds"][seed_id]
+seed["B"], seed["H"]</pre>
+          <p><code>H</code> rows mean <code>c + a · x ≥ 0</code>. Class memberships are in <code>data["combinatorial"]["groups"]</code> and <code>data["affine_unimodular"]["groups"]</code>.</p>
+        </div></section>
+        <section id="classes-reference" class="panel references-panel"><h2>References</h2><div class="notes-content">
+          <ul class="reference-list" role="list">
+            <li><strong class="reference-label">[FO]</strong><span>Naoki Fujita and Hironori Oya, <a href="https://doi.org/10.1090/btran/231" target="_blank" rel="noopener"><em>Newton–Okounkov polytopes of Schubert varieties arising from cluster structures</em></a>, Transactions of the American Mathematical Society, Series B 12 (2025), 910–973.</span></li>
+            <li><strong class="reference-label">[CFHL]</strong><span>Yunhyung Cho, Naoki Fujita, Akihiro Higashitani and Eunjeong Lee, <a href="https://link.springer.com/article/10.1134/S0081543824040175" target="_blank" rel="noopener"><em>Newton–Okounkov Polytopes of Type A Flag Varieties of Small Ranks Arising from Cluster Structures</em></a>, Proceedings of the Steklov Institute of Mathematics 326 (2024), 352–366.</span></li>
+          </ul>
+        </div></section>
+      </section>
+    </div>
+    <noscript>This browser requires JavaScript. No external libraries or network connection are required after downloading this folder.</noscript>
+    <a class="blmm-top-button" href="#classes-top" aria-label="Back to top">↑ Top</a>
+  </main>
+  <footer><span class="footer-credit">Created with assistance from ChatGPT. · © Shin Hong, Jeongsoo Kim, Eunjeong Lee.</span></footer>
+  <dialog id="export-dialog" aria-labelledby="export-title">
+    <div class="export-heading"><h2 id="export-title">Export current seed</h2><button id="export-close" class="secondary" aria-label="Close export">Close</button></div>
+    <p id="export-description" class="small-note">Save or copy this exact seed, including its mutation path and coordinate convention.</p>
+    <textarea id="export-json" readonly aria-label="Current seed JSON" spellcheck="false"></textarea>
+    <div class="export-actions"><a id="export-download" class="download-button" download>Download JSON</a><button id="export-copy" class="secondary">Copy JSON</button><span id="export-feedback" class="small-note" role="status"></span></div>
+  </dialog>
+</body>
+</html>
