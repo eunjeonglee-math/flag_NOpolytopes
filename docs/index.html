@@ -105,14 +105,19 @@
         <details class="panel variables-panel" open><summary>Cluster variables</summary><div id="variables" class="variables"></div><p id="variable-note" class="small-note"></p></details>
         <section id="verification-source" class="panel reproduction-panel"><h2>SageMath &amp; data</h2><div class="notes-content">
           <h3>Notebooks</h3>
-          <pre>notebooks/A4_cluster_polytopes.ipynb
-notebooks/B2_cluster_polytopes.ipynb
-notebooks/finite_type_verification.py</pre>
+          <ul>
+            <li><a href="https://github.com/eunjeonglee-math/flag_NOpolytopes/blob/main/notebooks/A4_cluster_polytopes.ipynb" target="_blank" rel="noopener">View A4 notebook on GitHub</a></li>
+            <li><a href="https://github.com/eunjeonglee-math/flag_NOpolytopes/blob/main/notebooks/B2_cluster_polytopes.ipynb" target="_blank" rel="noopener">View B2 notebook on GitHub</a></li>
+            <li><a href="https://github.com/eunjeonglee-math/flag_NOpolytopes/blob/main/notebooks/finite_type_verification.py" target="_blank" rel="noopener">View finite_type_verification.py (required helper)</a></li>
+          </ul>
           <p>Keep the helper beside the notebooks and use a SageMath kernel. After generating the catalogue, choose <code>seed_id</code> to inspect <code>catalogue["seeds"][seed_id]</code> and <code>polytopes[seed_id]</code>.</p>
           <h3>Precomputed data</h3>
-          <pre>docs/data/verification/A3_verification.json
-docs/data/verification/A4_verification.json
-docs/data/verification/B2_verification.json</pre>
+          <ul>
+            <li><a href="data/verification/A3_verification.json" download="A3_verification.json">Download A3_verification.json</a></li>
+            <li><a href="data/verification/A4_verification.json" download="A4_verification.json">Download A4_verification.json</a></li>
+            <li><a href="data/verification/B2_verification.json" download="B2_verification.json">Download B2_verification.json</a></li>
+          </ul>
+          <p>To use the example below with individual downloads, place the JSON files in <code>docs/data/verification/</code> under your working folder.</p>
           <p>Read the saved results without rerunning the computation. From the repository root, use Python or SageMath:</p>
           <pre>import json
 from pathlib import Path
